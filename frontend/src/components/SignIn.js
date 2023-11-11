@@ -1,4 +1,4 @@
-import React, { useState ,useContext} from 'react'
+import React, { useState ,useContext,useEffect} from 'react'
 import '../css/SignIn.css'
 import logo from '../img/logo.png'
 import { Link, useNavigate } from 'react-router-dom'
@@ -20,7 +20,9 @@ const SignIn = () => {
   const notifyB = (msg) => {
     toast.success(msg)
   }
+  
   const postData = () => {
+    console.log('checking data');
 
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     if (!emailRegex.test(email)) {
@@ -56,6 +58,7 @@ const SignIn = () => {
       })
 
   }
+ 
   return (
     < div className="signIn" >
       <div>
