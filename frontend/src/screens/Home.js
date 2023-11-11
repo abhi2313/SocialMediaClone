@@ -21,7 +21,7 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (!token) {
-      navigate("./signin");
+      navigate("/signin");
     }
 
     // Fetching all posts

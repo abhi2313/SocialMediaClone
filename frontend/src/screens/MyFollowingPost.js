@@ -1,13 +1,14 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import "../css/Home.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 
 
 export default function MyFollowingPost() {
+    const location=useLocation()
     const { userLogin } = useContext(LoginContext)
     var picLink = "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
     const navigate = useNavigate();
@@ -24,7 +25,11 @@ export default function MyFollowingPost() {
     useEffect(() => {
         const token = localStorage.getItem("jwt");
         if (!token) {
-            navigate("/signin");
+            navigate("/signin",{
+                state:{
+                  previousUrl:location.pathname
+                }
+              });
         }
 
         // Fetching all posts

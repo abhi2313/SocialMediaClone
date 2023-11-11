@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate ,useLocation} from 'react-router-dom'
 
 function ProfilePic({ changeprofile }) {
     const hiddenFileInput = useRef(null)
+    const location=useLocation()
     const [image, setImage] = useState('')
     const [url, setUrl] = useState('')
     const navigate=useNavigate()
@@ -16,7 +17,11 @@ function ProfilePic({ changeprofile }) {
         const token=localStorage.getItem('jwt')
         if(!token)
         {
-          navigate('/signin')
+            navigate("/signin",{
+                state:{
+                  previousUrl:location.pathname
+                }
+              })
         }
     
       },[])

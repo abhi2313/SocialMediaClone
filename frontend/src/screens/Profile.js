@@ -1,20 +1,24 @@
 
 
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import PostDetail from "../components/PostDetail";
 import "../css/Profile.css";
 import ProfilePic from '../components/ProfilePic'
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,useLocation} from "react-router-dom";
+import { LoginContext } from "../context/LoginContext";
 
-export default function Profie() {
+export default function Profile() {
   var picLink = "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
   const [pic, setPic] = useState([]);
   const [show, setShow] = useState(false)
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState("")
   const [changePic, setChangePic] = useState(false)
-  const navigate=useNavigate()
+  const navigate = useNavigate()
+  const { userLogin } = useContext(LoginContext)
+  const location=useLocation()
+ 
 
 
   const toggleDetails = (posts) => {
@@ -25,14 +29,6 @@ export default function Profie() {
       setPosts(posts);
     }
   };
-  useEffect(()=>{
-    const token=localStorage.getItem('jwt')
-    if(!token)
-    {
-      navigate('/signin')
-    }
-
-  },[])
 
   const changeprofile = () => {
     if (changePic) {
@@ -43,7 +39,23 @@ export default function Profie() {
   }
 
 
+
+
   useEffect(() => {
+    const token=localStorage.getItem("jwt")
+
+    if(!token)
+    {
+      navigate("/signin",{
+        state:{
+          previousUrl:location.pathname
+        }
+      })
+      window.location.reload()
+    }
+   
+
+
     fetch(`/user/${JSON.parse(localStorage.getItem("user"))._id}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -57,6 +69,8 @@ export default function Profie() {
         // console.log(pic);
       });
   }, []);
+
+ 
 
   return (
     <div className="profile">
@@ -72,7 +86,9 @@ export default function Profie() {
         </div>
         {/* profile-data */}
         <div className="pofile-data">
-          <h1>{JSON.parse(localStorage.getItem("user")).name}</h1>
+          {/* <h1>{JSON.parse(localStorage.getItem("user")).name}</h1>
+           */}
+           <h1>{user.name}</h1>
           <div className="profile-info" style={{ display: "flex" }}>
             <p>{pic ? pic.length : "0"} posts</p>
             <p>{user.followers ? user.followers.length : "0"} followers</p>
@@ -91,7 +107,7 @@ export default function Profie() {
       {/* Gallery */}
       <div className="gallery">
         {pic.map((pics) => {
-          return <img key={pics._id} src={pics.photo} style={{cursor:"pointer"}}
+          return <img key={pics._id} src={pics.photo}
             onClick={() => {
               toggleDetails(pics)
             }}
@@ -107,4 +123,5 @@ export default function Profie() {
       }
     </div>
   );
+
 }

@@ -4,6 +4,7 @@ import logo from '../img/logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { LoginContext } from '../context/LoginContext'
+import { useLocation } from 'react-router-dom'
 
 
 
@@ -13,6 +14,7 @@ const SignIn = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const location=useLocation()
   const notifyA = (msg) => {
     toast.error(msg)
 
@@ -20,6 +22,7 @@ const SignIn = () => {
   const notifyB = (msg) => {
     toast.success(msg)
   }
+
   useEffect(()=>{
     const token=localStorage.getItem('jwt')
     if(token)
@@ -30,7 +33,7 @@ const SignIn = () => {
   },[])
   
   const postData = () => {
-    console.log('checking data');
+    // console.log('checking data');
 
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     if (!emailRegex.test(email)) {
@@ -61,7 +64,7 @@ const SignIn = () => {
           localStorage.setItem("jwt",data.token)
           localStorage.setItem("user",JSON.stringify(data.user))
           setUserLogin(true)
-          navigate("/")
+          navigate(location?.state?.previousUrl?location.state.previousUrl:"/")
         }
       })
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import '../css/CreatePost.css'
 import { toast } from 'react-toastify'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate,useLocation} from 'react-router-dom'
 
 export default function CreatePost() {
   var picLink = "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
+  const location=useLocation()
 
   const navigate=useNavigate()
   const [body, setBody] = useState('')
@@ -18,14 +19,17 @@ export default function CreatePost() {
   const notifyB = (msg) => {
     toast.success(msg)
   }
-  useEffect(()=>{
-    const token=localStorage.getItem('jwt')
-    if(!token)
-    {
-      navigate('/signin')
-    }
-
-  },[])
+ useEffect(()=>{
+  const token=localStorage.getItem('jwt')
+  if(!token)
+  {
+    navigate("/signin",{
+      state:{
+        previousUrl:location.pathname
+      }
+    })
+  }
+ },[])
 
 
   useEffect(() => {
@@ -107,9 +111,9 @@ export default function CreatePost() {
       <div className="details">
         <div className="card-header">
           <div className="card-pic">
-            <img src={JSON.parse(localStorage.getItem('user')).Photo?JSON.parse(localStorage.getItem('user')).Photo:picLink}/>
-          </div>
-          <h5>{JSON.parse(localStorage.getItem('user')).name}</h5>
+    
+           </div>
+        
         </div>
         <textarea value={body}
           onChange={(e) => { setBody(e.target.value) }}

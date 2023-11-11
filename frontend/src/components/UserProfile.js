@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 // import PostDetail from './PostDetail'
 import '../css/Profile.css'
 import { useParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useLocation } from 'react-router-dom'
 
 
 const UserProfile = () => {
     var picLink = "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
+    const location=useLocation()
 
     const { userid } = useParams()
     const [user, setUser] = useState("")
@@ -21,7 +22,11 @@ const UserProfile = () => {
         const token=localStorage.getItem('jwt')
         if(!token)
         {
-          navigate('/signin')
+            navigate("/signin",{
+                state:{
+                  previousUrl:location.pathname
+                }
+              })
         }
     
       },[])
@@ -108,7 +113,7 @@ const UserProfile = () => {
         <div className='profile'>
             <div className="profile-frame">
                 <div className="profile-pic">
-                    <img src={user.Photo?user.Photo:picLink} alt="" />
+                    <img style={{cursor:"default"}}src={user.Photo?user.Photo:picLink} alt="" />
                 </div>
                 <div className="profile-data">
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>

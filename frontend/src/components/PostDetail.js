@@ -1,17 +1,22 @@
 import React, { useEffect } from 'react'
 import '../css/PostDetail.css'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate,useLocation} from 'react-router-dom'
 import {toast} from 'react-toastify'
 
 function PostDetail({ item, toggleDetails }) {
     const navigate=useNavigate()
+    const location=useLocation()
       const notifyA = (msg) => toast.error(msg);
   const notifyB = (msg) => toast.success(msg);
   useEffect(()=>{
     const token=localStorage.getItem('jwt')
     if(!token)
     {
-      navigate('/signin')
+        navigate("/signin",{
+            state:{
+              previousUrl:location.pathname
+            }
+          })
     }
 
   },[])
@@ -49,10 +54,10 @@ function PostDetail({ item, toggleDetails }) {
                         style={{ borderBottom: "1px solid #00000029" }}
                     >
                         <div className="card-pic">
-                            <img
+                            {/* <img
                                 src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
                                 alt=""
-                            />
+                            /> */}
                         </div>
                         <h5>{item.postedBy.name}</h5>
                         <div className="deletePost" onClick={() => { removePost(item._id) }}>
