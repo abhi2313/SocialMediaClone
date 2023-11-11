@@ -1,0 +1,44 @@
+.createP
+{
+    max-width: 500px;
+    margin: 10px auto;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+.main-div
+{
+    border-top: 1px solid gray;
+}
+.post-header
+{
+    display: flex;
+}
+#post-btn
+{
+    border: none;
+    color: rgb(69, 6, 132);
+    background: none;
+    font-weight: bolder;
+    cursor: pointer;
+}
+h4
+{
+    margin: 3px auto;
+}
+.details
+{
+    border-top: 1px solid gray;
+}
+textarea
+{
+    width: 90%;
+    border: none;
+    outline: none;
+}
+#output
+{
+    width: 300px;
+    border: none;
+    outline: none;
+    margin-top: 5px;
+}
