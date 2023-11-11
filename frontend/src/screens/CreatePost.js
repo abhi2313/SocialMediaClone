@@ -18,6 +18,14 @@ export default function CreatePost() {
   const notifyB = (msg) => {
     toast.success(msg)
   }
+  useEffect(()=>{
+    const token=localStorage.getItem('jwt')
+    if(!token)
+    {
+      navigate('/signin')
+    }
+
+  },[])
 
 
   useEffect(() => {

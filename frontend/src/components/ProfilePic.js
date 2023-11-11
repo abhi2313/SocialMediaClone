@@ -1,15 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function ProfilePic({ changeprofile }) {
     const hiddenFileInput = useRef(null)
     const [image, setImage] = useState('')
     const [url, setUrl] = useState('')
+    const navigate=useNavigate()
 
     const handleClick = () => {
 
         hiddenFileInput.current.click()
 
     }
+    useEffect(()=>{
+        const token=localStorage.getItem('jwt')
+        if(!token)
+        {
+          navigate('/signin')
+        }
+    
+      },[])
 
     useEffect(() => {
         if (image) {

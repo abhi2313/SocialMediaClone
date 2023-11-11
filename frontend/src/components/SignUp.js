@@ -1,4 +1,4 @@
-import React, {  useState } from 'react'
+import React, {  useState ,useEffect} from 'react'
 import logo from '../img/logo.png'
 import '../css/SignUp.css'
 import { Link, useNavigate } from 'react-router-dom'
@@ -21,6 +21,14 @@ const SignUp = () => {
     const notifyB = (msg) => {
         toast.success(msg)
     }
+    useEffect(()=>{
+        const token=localStorage.getItem('jwt')
+        if(token)
+        {
+          navigate('/')
+        }
+    
+      },[])
     const postData = () => {
 
         const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/

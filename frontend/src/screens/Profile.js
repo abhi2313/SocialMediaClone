@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import PostDetail from "../components/PostDetail";
 import "../css/Profile.css";
 import ProfilePic from '../components/ProfilePic'
+import { useNavigate } from "react-router-dom";
 
 export default function Profie() {
   var picLink = "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
@@ -13,6 +14,7 @@ export default function Profie() {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState("")
   const [changePic, setChangePic] = useState(false)
+  const navigate=useNavigate()
 
 
   const toggleDetails = (posts) => {
@@ -23,6 +25,14 @@ export default function Profie() {
       setPosts(posts);
     }
   };
+  useEffect(()=>{
+    const token=localStorage.getItem('jwt')
+    if(!token)
+    {
+      navigate('/signin')
+    }
+
+  },[])
 
   const changeprofile = () => {
     if (changePic) {

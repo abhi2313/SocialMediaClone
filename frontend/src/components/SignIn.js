@@ -20,6 +20,14 @@ const SignIn = () => {
   const notifyB = (msg) => {
     toast.success(msg)
   }
+  useEffect(()=>{
+    const token=localStorage.getItem('jwt')
+    if(token)
+    {
+      navigate('/')
+    }
+
+  },[])
   
   const postData = () => {
     console.log('checking data');

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 // import PostDetail from './PostDetail'
 import '../css/Profile.css'
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 const UserProfile = () => {
@@ -13,8 +14,17 @@ const UserProfile = () => {
     // const [show, setShow] = useState(false)
     const [posts, setPosts] = useState([])
     const [isFollow, setIsFollow] = useState(false)
+    const navigate=useNavigate()
     // const [followers, setFollowers] = useState(0)
     // const [following, setFollowing] = useState(0)
+    useEffect(()=>{
+        const token=localStorage.getItem('jwt')
+        if(!token)
+        {
+          navigate('/signin')
+        }
+    
+      },[])
 
     const followUser = (userId) => {
         fetch('/follow', {

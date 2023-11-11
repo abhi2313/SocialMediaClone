@@ -7,6 +7,14 @@ function PostDetail({ item, toggleDetails }) {
     const navigate=useNavigate()
       const notifyA = (msg) => toast.error(msg);
   const notifyB = (msg) => toast.success(msg);
+  useEffect(()=>{
+    const token=localStorage.getItem('jwt')
+    if(!token)
+    {
+      navigate('/signin')
+    }
+
+  },[])
     const removePost = (postId) => {
         if (window.confirm("Do you really want to delete this post?")) {
             fetch(`/${postId}`, {
